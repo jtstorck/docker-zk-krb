@@ -19,5 +19,7 @@ create /node content sasl:client:cdrwa
 
 # zkCli.sh SASL config
 export JVMFLAGS="-Djava.security.auth.login.config=/opt/zookeeper-3.4.6/jaas/client-jaas.conf"
+
 /opt/zookeeper-3.4.6/bin/zkCli.sh -server zk-kerberos:2181
+
 create /node content sasl:client:cdrwa
