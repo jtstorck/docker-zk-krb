@@ -18,5 +18,5 @@ create /node content sasl:client:cdrwa
 # run the zk-migrator to read the protected nodes for 'client' from zookeeper
 /toolkit/bin/zk-migrator.sh -r -z zk-kerberos:2181/ -k /opt/zookeeper-3.4.6/jaas/client-jaas.conf
 
-# run the zk-migrator to send nodes for 'client' from zookeeper
+# run the zk-migrator to send nodes for 'client' to zookeeper
 /toolkit/bin/zk-migrator.sh -s -z zk-kerberos:2181/node -k /opt/zookeeper-3.4.6/jaas/client-jaas.conf -f /toolkit/test-data-user-pass.json
