@@ -61,10 +61,14 @@ service kadmin start
 kadmin.local -q "addprinc admin/admin" < passwd
 kadmin.local -q "addprinc zookeeper/zk-kerberos" < passwd
 kadmin.local -q "addprinc client/zk-kerberos" < passwd
+kadmin.local -q 'addprinc -randkey -maxlife "1 second" -maxrenewlife "10 minutes" ugitest1/zk-kerberos'
+kadmin.local -q 'addprinc -randkey -maxlife "1 second" -maxrenewlife "10 minutes" ugitest2/zk-kerberos'
 rm -f passwd
 
 kadmin.local -q "ktadd -k /tmp/zk.keytab zookeeper/zk-kerberos"
 kadmin.local -q "ktadd -k /tmp/client.keytab client/zk-kerberos"
+kadmin.local -q "ktadd -k /tmp/ugitest1.keytab ugitest1/zk-kerberos"
+kadmin.local -q "ktadd -k /tmp/ugitest2.keytab ugitest2/zk-kerberos"
 
 echo "*/admin@$REALM     *" >> /var/kerberos/krb5kdc/kadm5.acl
 echo "*/zk-kerberos@$REALM     *" >> /var/kerberos/krb5kdc/kadm5.acl
@@ -83,4 +87,4 @@ export ZOO_LOG_DIR=/opt/zookeeper-3.4.6/logs
 echo "ZOO_LOG_DIR: $ZOO_LOG_DIR"
 /opt/zookeeper-3.4.6/bin/zkServer.sh restart
 
-tail -f -n+1 /var/log/k*.log /opt/zookeeper-3.4.6/logs/zookeeper.out
+tail -F -n+1 /var/log/k*.log /opt/zookeeper-3.4.6/logs/zookeeper.out
